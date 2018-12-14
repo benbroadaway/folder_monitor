@@ -6,7 +6,7 @@ import pytest
 import os
 from shutil import rmtree
 from pathlib import Path
-from folder_monitor.monitor import monitor_the_folder
+from src.folder_monitor.monitor import monitor_the_folder
 
 __author__ = "Benjamin Broadaway"
 __copyright__ = "Benjamin Broadaway"

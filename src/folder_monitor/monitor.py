@@ -22,7 +22,7 @@ import sys
 import logging
 
 from pathlib import Path
-from shutil import copy2
+from shutil import copyfile
 import re
 import os
 from folder_monitor import __version__
@@ -115,7 +115,7 @@ def monitor_the_folder(src, dst, ignore):
                 os.rmdir(p)
         else:
             # copy to destination
-            copied_file = copy2(p, dst)
+            copied_file = copyfile(p, Path(dst).joinpath(p.name))
             _logger.info("{} -> {}".format(p.name, copied_file))
             if Path(copied_file).exists() and (Path(copied_file).__sizeof__() == p.__sizeof__()):
                 # okay, we can delete
