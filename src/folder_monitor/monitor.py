@@ -23,6 +23,7 @@ import logging
 
 from pathlib import Path
 from shutil import copyfile
+from logging.handlers import RotatingFileHandler
 import re
 import os
 from folder_monitor import __version__
@@ -136,8 +137,23 @@ def setup_logging(loglevel):
       loglevel (int): minimum loglevel for emitting messages
     """
     logformat = "[%(asctime)s] %(levelname)s:%(name)s:%(message)s"
-    logging.basicConfig(level=loglevel, stream=sys.stdout,
-                        format=logformat, datefmt="%Y-%m-%d %H:%M:%S")
+    #logging.basicConfig(level=loglevel, stream=sys.stdout,
+    #                    format=logformat, datefmt="%Y-%m-%d %H:%M:%S")
+
+    logFile = '/tmp/folder_monitor.log'
+
+    logging_handler = RotatingFileHandler(logFile, mode='a', maxBytes=5*1024*1024, 
+                                    backupCount=2, encoding=None, delay=0)
+    logging_handler.setFormatter(logging.Formatter(logformat))
+    logging_handler.setLevel(loglevel)
+
+    consoleHandler = logging.StreamHandler()
+    consoleHandler.setFormatter(logging.Formatter(logformat))
+
+
+    _logger.addHandler(logging_handler)
+    _logger.addHandler(consoleHandler)
+    _logger.setLevel(loglevel)
 
 
 def main(args):
@@ -147,10 +163,9 @@ def main(args):
       args ([str]): command line parameter list
     """
     args = parse_args(args)
-    print("args were parsed")
     setup_logging(args.loglevel)
     monitor_the_folder(args.monitor_dir, args.destination_dir, args.ignore_pattern)
-    _logger.info("Script ends here")
+    _logger.info("#### done with monitoring run ####")
 
 
 def run():
