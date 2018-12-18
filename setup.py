@@ -20,7 +20,21 @@ except VersionConflict:
     print("Error: version of setuptools is too old (<38.3)!")
     sys.exit(1)
 
+setup_requirements = [  # setup_requires package requirements
+    "pytest-runner"
+]
+
+install_requirements = [  # install_requires install requirements
+    # TODO: put install requirements here
+]
+
+test_requirements = [  # tests_require test requirements
+    "pytest", "pytest-cov"
+]
+
 
 if __name__ == "__main__":
-    setup(setup_requires=["pytest-runner"],
-    tests_require=["pytest", "pytest-cov"])
+    setup(
+        setup_requires=setup_requirements,
+        tests_require=test_requirements
+    )
