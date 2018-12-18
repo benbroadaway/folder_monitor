@@ -10,34 +10,43 @@ Description
 
 A longer description of your project goes here...
 
+Get Started
+===========
+Create a virtual environment::
+
+   # use your python executable here >=3.7
+   python3 -m venv ./venv
+   # start the environment
+   source ./venv/bin/activate
+
 Build
 =====
 Building is run through ``setup.py``::
 
-   python3 setup.py build
+   python setup.py build
 
 Testing
 ===========
 Run a test::
 
-   python3 -m pytest -s test_monitor.py::test_monitor
+   python -m pytest -s test_monitor.py::test_monitor
 
 Run all tests::
 
-   python3 setup.py test
+   python setup.py test
 
 Install
 =======
 This will build the egg, and install it to your system::
 
-   python3 setup.py install
+   python setup.py install
 
 Uninstall
 ==========
 This takes a little more work::
 
    # looks for package info
-   pip3 show folder_monitor | grep Location
+   pip show folder_monitor | grep Location
    # outputs...
    # Location: /usr/local/lib/python3.7/site-packages/folder_monitor-0.1.0-py3.7.egg
 
