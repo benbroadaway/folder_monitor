@@ -75,6 +75,14 @@ def parse_args(args):
         type=str,
         metavar="PTRN")
     parser.add_argument(
+        '-log',
+        '--log_file',
+        dest="log_path",
+        help="Log file path",
+        required=False,
+        type=str,
+        metavar="LOG")
+    parser.add_argument(
         '-v',
         '--verbose',
         dest="loglevel",
@@ -130,7 +138,7 @@ def monitor_the_folder(src, dst, ignore):
 
 
 
-def setup_logging(loglevel):
+def setup_logging(loglevel, logPath):
     """Setup basic logging
 
     Args:
@@ -140,7 +148,10 @@ def setup_logging(loglevel):
     #logging.basicConfig(level=loglevel, stream=sys.stdout,
     #                    format=logformat, datefmt="%Y-%m-%d %H:%M:%S")
 
-    logFile = '/tmp/folder_monitor.log'
+    if logPath:
+        logFile = logPath
+    else:
+        logFile = '/tmp/folder_monitor.log'
 
     logging_handler = RotatingFileHandler(logFile, mode='a', maxBytes=5*1024*1024, 
                                     backupCount=2, encoding=None, delay=0)
@@ -163,7 +174,7 @@ def main(args):
       args ([str]): command line parameter list
     """
     args = parse_args(args)
-    setup_logging(args.loglevel)
+    setup_logging(args.loglevel, args.log_path)
     monitor_the_folder(args.monitor_dir, args.destination_dir, args.ignore_pattern)
     _logger.info("#### done with monitoring run ####")
 
